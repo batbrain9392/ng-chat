@@ -4,9 +4,11 @@ import { ChatRoutingModule } from './chat-routing.module';
 import { MaterialModule } from '../material/material.module';
 
 import { ChatComponent } from './chat.component';
+import { ChatInputComponent } from './chat-input/chat-input.component';
+import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
 
 @NgModule({
-  declarations: [ChatComponent],
+  declarations: [ChatComponent, ChatInputComponent, ChatMessagesComponent],
   imports: [
     CommonModule,
     ChatRoutingModule,
