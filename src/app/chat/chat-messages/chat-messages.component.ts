@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat-messages.component.css']
 })
 export class ChatMessagesComponent implements OnInit {
+  messages = [];
 
   constructor() { }
 
   ngOnInit() {
+    for (let i = 0; i < 50; i++) {
+      this.messages.push({
+        message: `message ${i}`,
+        user: i
+      });
+    }
   }
 
 }

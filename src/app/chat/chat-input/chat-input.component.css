@@ -1,0 +1,10 @@
+form {
+    display: grid;
+    grid-template-columns: auto max-content;
+    gap: 10px;
+    padding: 10px 10px 0 20px;
+}
+
+button[mat-icon-button] {
+    margin-top: 9px;
+}

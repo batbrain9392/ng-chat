@@ -8,11 +8,15 @@ import { ChatInputComponent } from './chat-input/chat-input.component';
 import { ChatMessagesComponent } from './chat-messages/chat-messages.component';
 
 @NgModule({
-  declarations: [ChatComponent, ChatInputComponent, ChatMessagesComponent],
+  declarations: [
+    ChatComponent, 
+    ChatInputComponent, 
+    ChatMessagesComponent
+  ],
   imports: [
     CommonModule,
-    ChatRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ChatRoutingModule
   ]
 })
 export class ChatModule { }
