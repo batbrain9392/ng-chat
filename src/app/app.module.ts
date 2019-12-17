@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { MaterialModule } from './material/material.module';
+import { MaterialModule } from './theme/material.module';
 
 @NgModule({
   declarations: [

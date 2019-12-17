@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatRoutingModule } from './chat-routing.module';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '../theme/material.module';
 
 import { ChatComponent } from './chat.component';
 import { ChatInputComponent } from './chat-input/chat-input.component';
