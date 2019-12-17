@@ -10,4 +10,6 @@ import { Chat } from '../../chat';
 export class ChatBubbleComponent {
   @Input()
   chat: Chat;
+  @Input()
+  isMe: boolean;
 }

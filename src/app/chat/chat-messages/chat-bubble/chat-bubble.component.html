@@ -1,5 +1,7 @@
-<img [src]="chat.userImgUrl" />
-<mat-card>
-  <p class="mat-caption">{{ chat.username }}</p>
-  <div>{{ chat.text }}</div>
-</mat-card>
+<div class="bubble-container" [class.reverse]="isMe">
+  <img [src]="chat.userImgUrl || 'assets/avatar.png'" />
+  <mat-card>
+    <p class="mat-caption">{{ isMe ? 'Me' : chat.username }}</p>
+    <div class="text">{{ chat.text }}</div>
+  </mat-card>
+</div>

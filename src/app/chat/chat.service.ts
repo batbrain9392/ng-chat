@@ -16,9 +16,8 @@ export class ChatService {
     for (let i = 0; i < 50; i++) {
       messages.push({
         id: `${new Date().getTime()}`,
-        username: `username${i}`,
-        userImgUrl: 'assets/avatar.png',
-        text: `message ${i}`
+        text: `message ${i}`,
+        username: `username${i}`
       });
     }
     this.messages.next(messages);

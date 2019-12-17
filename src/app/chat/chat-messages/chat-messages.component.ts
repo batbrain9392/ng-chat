@@ -1,10 +1,12 @@
 import {
   Component,
+  OnInit,
   Input,
   OnChanges,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Chat } from '../chat';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-chat-messages',
@@ -12,11 +14,16 @@ import { Chat } from '../chat';
   styleUrls: ['./chat-messages.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatMessagesComponent implements OnChanges {
+export class ChatMessagesComponent implements  OnInit, OnChanges {
   @Input()
   messages: Chat[];
+  myUsername: string;
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
+
+  async ngOnInit() {
+    this.myUsername = (await this.authService.user).username;
+  }
 
   ngOnChanges() {
     setTimeout(

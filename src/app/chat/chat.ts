@@ -1,6 +1,6 @@
-export interface Chat {
+import { User } from '../auth/user';
+
+export interface Chat extends User {
   id: string;
-  username: string;
-  userImgUrl?: string;
   text: string;
 }

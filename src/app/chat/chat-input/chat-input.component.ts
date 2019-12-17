@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Chat } from '../chat';
+import { AuthService } from '../../auth/auth.service';
 import { ChatService } from '../chat.service';
 
 @Component({
@@ -8,15 +9,17 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-input.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatInputComponent {
-  chat: Chat = {
-    id: `${new Date().getTime()}`,
-    username: 'username',
-    userImgUrl: 'assets/avatar.png',
-    text: ''
-  };
+export class ChatInputComponent implements OnInit {
+  chat = <Chat>{};
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService
+  ) {}
+
+  async ngOnInit() {
+    this.chat.username = (await this.authService.user).username;
+  }
 
   onSubmit() {
     this.chat.text = this.chat.text && this.chat.text.trim();

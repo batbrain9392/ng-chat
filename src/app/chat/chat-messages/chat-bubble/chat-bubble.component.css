@@ -1,12 +1,20 @@
-:host {
+.bubble-container {
   display: grid;
   grid-template-columns: 40px auto;
   gap: 10px;
-  width: 80%;
 }
 
 img {
   width: 100%;
   border-radius: 50%;
   margin-block-start: 6px;
+}
+
+mat-card {
+  width: 70%;
+  padding: 10px;
+}
+
+.reverse {
+  direction: rtl;
 }
