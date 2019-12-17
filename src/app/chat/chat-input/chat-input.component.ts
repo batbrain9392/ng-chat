@@ -10,6 +10,7 @@ import { ChatService } from '../chat.service';
 })
 export class ChatInputComponent {
   chat: Chat = {
+    id: `${new Date().getTime()}`,
     username: 'username',
     userImgUrl: 'assets/avatar.png',
     text: ''

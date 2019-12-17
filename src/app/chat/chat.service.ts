@@ -15,7 +15,8 @@ export class ChatService {
     const messages: Chat[] = [];
     for (let i = 0; i < 50; i++) {
       messages.push({
-        username: `id${i}`,
+        id: `${new Date().getTime()}`,
+        username: `username${i}`,
         userImgUrl: 'assets/avatar.png',
         text: `message ${i}`
       });

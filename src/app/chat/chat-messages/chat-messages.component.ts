@@ -29,4 +29,8 @@ export class ChatMessagesComponent implements OnChanges {
       200
     );
   }
+
+  trackById(index: number, chat: Chat) {
+    return chat.id;
+  }
 }

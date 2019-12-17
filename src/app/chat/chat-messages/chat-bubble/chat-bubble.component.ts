@@ -9,5 +9,5 @@ import { Chat } from '../../chat';
 })
 export class ChatBubbleComponent {
   @Input()
-  message: Chat;
+  chat: Chat;
 }
