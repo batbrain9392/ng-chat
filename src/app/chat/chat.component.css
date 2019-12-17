@@ -1,5 +1,10 @@
-.chat-container {
-    height: 100vh;
-    display: grid;
-    grid-template-rows: auto max-content;
+:host {
+  display: grid;
+}
+
+app-chat-input {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

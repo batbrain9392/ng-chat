@@ -1,4 +1,2 @@
-<div class="chat-container">
-    <app-chat-messages></app-chat-messages>
-    <app-chat-input></app-chat-input>
-</div>
+<app-chat-messages [messages]="messages$ | async"></app-chat-messages>
+<app-chat-input></app-chat-input>

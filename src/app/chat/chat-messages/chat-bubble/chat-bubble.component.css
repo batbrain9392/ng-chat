@@ -1,0 +1,11 @@
+:host {
+  display: grid;
+  grid-template-columns: 40px auto;
+  gap: 10px;
+}
+
+img {
+  width: 100%;
+  border-radius: 50%;
+  margin-block-start: 6px;
+}

@@ -1,9 +1,9 @@
-<form>
-    <mat-form-field appearance="outline">
-        <mat-label>Type a message</mat-label>
-        <input matInput>
-    </mat-form-field>
-    <button mat-icon-button>
-        <mat-icon>send</mat-icon>
-    </button>
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Type a message</mat-label>
+    <input matInput [(ngModel)]="chat.text" name="text" />
+  </mat-form-field>
+  <button mat-icon-button type="submit">
+    <mat-icon>send</mat-icon>
+  </button>
 </form>

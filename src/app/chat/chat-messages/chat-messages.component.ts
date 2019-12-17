@@ -1,22 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { Chat } from '../chat';
 
 @Component({
   selector: 'app-chat-messages',
   templateUrl: './chat-messages.component.html',
-  styleUrls: ['./chat-messages.component.css']
+  styleUrls: ['./chat-messages.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatMessagesComponent implements OnInit {
-  messages = [];
+export class ChatMessagesComponent implements OnChanges {
+  @Input()
+  messages: Chat[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-    for (let i = 0; i < 50; i++) {
-      this.messages.push({
-        message: `message ${i}`,
-        user: i
-      });
-    }
+  ngOnChanges() {
+    setTimeout(
+      () =>
+        window.scrollTo({
+          left: 0,
+          top: document.body.scrollHeight,
+          behavior: 'auto'
+        }),
+      200
+    );
   }
-
 }

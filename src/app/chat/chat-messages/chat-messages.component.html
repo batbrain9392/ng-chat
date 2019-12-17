@@ -1,3 +1,5 @@
-<div *ngFor="let msg of messages">
-    {{msg.message}}
-</div>
+<app-chat-bubble
+  *ngFor="let message of messages"
+  [message]="message"
+></app-chat-bubble>
+<p *ngIf="!messages.length">No messages</p>
