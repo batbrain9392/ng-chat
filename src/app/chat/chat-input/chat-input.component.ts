@@ -18,7 +18,9 @@ export class ChatInputComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.chat.username = (await this.authService.user).username;
+    this.chat.timestamp = new Date().getTime();
+    const { username, userImgUrl } = await this.authService.user;
+    this.chat = { ...this.chat, username, userImgUrl };
   }
 
   onSubmit() {

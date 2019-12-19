@@ -4,6 +4,10 @@
   gap: 10px;
 }
 
+.reverse {
+  direction: rtl;
+}
+
 img {
   width: 100%;
   border-radius: 50%;
@@ -11,10 +15,13 @@ img {
 }
 
 mat-card {
-  width: 70%;
   padding: 10px;
+  width: fit-content;
+  max-width: 70%;
+  word-break: break-word;
+  direction: ltr;
 }
 
-.reverse {
-  direction: rtl;
+.xtra-small {
+  font-size: 9px;
 }

@@ -17,7 +17,8 @@ export class ChatService {
       messages.push({
         id: `${new Date().getTime()}`,
         text: `message ${i}`,
-        username: `username${i}`
+        username: `username${i}`,
+        timestamp: new Date().getTime()
       });
     }
     this.messages.next(messages);

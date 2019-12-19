@@ -1,7 +1,8 @@
 <div class="bubble-container" [class.reverse]="isMe">
   <img [src]="chat.userImgUrl || 'assets/avatar.png'" />
   <mat-card>
-    <p class="mat-caption">{{ isMe ? 'Me' : chat.username }}</p>
-    <div class="text">{{ chat.text }}</div>
+    <p class="mat-small color-accent">{{ isMe ? 'Me' : chat.username }}</p>
+    <p class="text">{{ chat.text }}</p>
+    <div class="xtra-small" style="text-align: right;">{{ chat.timestamp | date:'shortTime' }}</div>
   </mat-card>
 </div>

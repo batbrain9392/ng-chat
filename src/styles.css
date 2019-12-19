@@ -1,3 +1,18 @@
+:root {
+  --primary: #3f51b5;
+  --accent: #ff4081;
+  --warn: #f44336;
+}
+
+.color-primary { color: var(--primary); }
+.background-primary { background-color: var(--primary); }
+
+.color-accent { color: var(--accent); }
+.background-accent { background-color: var(--accent); }
+
+.color-warn { color: var(--warn); }
+.background-warn { background-color: var(--warn); }
+
 html,
 body {
   height: 100%;

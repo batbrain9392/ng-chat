@@ -3,7 +3,7 @@
     <mat-label>Type a message</mat-label>
     <input matInput [(ngModel)]="chat.text" name="text" />
   </mat-form-field>
-  <button mat-icon-button type="submit">
+  <button mat-icon-button type="submit" [color]="chat.text ? 'primary' : null">
     <mat-icon>send</mat-icon>
   </button>
 </form>
