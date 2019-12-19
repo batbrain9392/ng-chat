@@ -1,0 +1,16 @@
+<button
+  mat-icon-button
+  appDropZone
+  (hovered)="toggleHover($event)"
+  (dropped)="onDrop($event)"
+  (click)="inputFile.click()"
+  [color]="isHovering ? 'primary' : null"
+>
+  <mat-icon>attach_file</mat-icon>
+</button>
+<input
+  type="file"
+  #inputFile
+  (change)="onDrop($event.target.files)"
+  hidden
+/>

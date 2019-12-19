@@ -23,6 +23,10 @@ export class ChatInputComponent implements OnInit {
     this.chat = { ...this.chat, username, userImgUrl };
   }
 
+  onDrop(file: File) {
+    console.log(file.name);
+  }
+
   onSubmit() {
     this.chat.text = this.chat.text && this.chat.text.trim();
     if (this.chat.text) {
