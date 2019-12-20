@@ -1,0 +1,22 @@
+<button
+  mat-icon-button
+  type="button"
+  class="margin-top"
+  [matMenuTriggerFor]="menu"
+>
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <a
+    mat-menu-item
+    href="https://github.com/batbrain9392/ng-chat"
+    target="blank"
+  >
+    <mat-icon>launch</mat-icon>
+    <span>Open github link</span>
+  </a>
+  <button mat-menu-item (click)="signout()">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Sign out</span>
+  </button>
+</mat-menu>

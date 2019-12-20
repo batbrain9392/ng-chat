@@ -1,8 +1,10 @@
-import { User } from '../auth/user';
-
-export interface Chat extends User {
+export interface Chat {
   id?: string;
   text?: string;
   imgUrl?: string;
   timestamp: number;
+  user: {
+    displayName: string;
+    photoURL?: string;
+  };
 }

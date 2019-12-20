@@ -1,31 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { first } from 'rxjs/operators';
-import { User } from './user';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { take, filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userBS = new BehaviorSubject<User>({
-    username: 'username',
-    userImgUrl: ''
-  });
-  user = this.userBS
-    .asObservable()
-    .pipe(first())
+  user$ = this.afAuth.user.pipe(take(1));
+  user = this.user$
+    .pipe(
+      filter(user => !!user),
+      map(({ displayName, photoURL }) => ({ displayName, photoURL }))
+    )
     .toPromise();
 
-  constructor() {}
+  constructor(private afAuth: AngularFireAuth) {}
 
   signin() {
-    this.userBS.next({
-      username: 'username',
-      userImgUrl: ''
-    });
+    return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
 
   signout() {
-    this.userBS.next(null);
+    return this.afAuth.auth.signOut();
   }
 }

@@ -32,11 +32,10 @@ export class ChatService {
   }
 
   async formChat() {
-    const { username, userImgUrl } = await this.authService.user;
+    const user = await this.authService.user;
     return {
-      username,
-      userImgUrl,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      user
     } as Chat;
   }
 
