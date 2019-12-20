@@ -1,16 +1,24 @@
-<button
-  mat-icon-button
-  appDropZone
-  (hovered)="toggleHover($event)"
-  (dropped)="onDrop($event)"
-  (click)="inputFile.click()"
-  [color]="isHovering ? 'primary' : null"
+<ng-container
+  *ngIf="this.chatService.isUploadActive$ | async; else uploadInactive"
 >
-  <mat-icon>attach_file</mat-icon>
-</button>
-<input
-  type="file"
-  #inputFile
-  (change)="onDrop($event.target.files)"
-  hidden
-/>
+  <mat-spinner diameter="40"></mat-spinner>
+</ng-container>
+<ng-template #uploadInactive>
+  <button
+    mat-icon-button
+    appDropZone
+    (hovered)="toggleHover($event)"
+    (dropped)="onDrop($event)"
+    (click)="inputFile.click()"
+    [color]="isHovering ? 'primary' : null"
+  >
+    <mat-icon>attach_file</mat-icon>
+  </button>
+  <input
+    type="file"
+    accept="image/*"
+    #inputFile
+    (change)="onDrop($event.target.files)"
+    hidden
+  />
+</ng-template>

@@ -1,9 +1,10 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  Output,
-  EventEmitter
+  ViewChild,
+  ElementRef
 } from '@angular/core';
+import { ChatService } from '../../chat.service';
 
 @Component({
   selector: 'app-upload',
@@ -12,22 +13,23 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadComponent {
-  @Output()
-  dropped = new EventEmitter<File>();
+  @ViewChild('inputFile')
+  inputFileEl: ElementRef<HTMLInputElement>;
   isHovering: boolean;
 
-  constructor() {}
+  constructor(public chatService: ChatService) {}
 
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
 
-  onDrop(event: FileList) {
-    const file = event.item(0);
+  onDrop(files: FileList) {
+    const file = files.item(0);
     if (file.type.split('/')[0] !== 'image') {
       console.error('unsupported file type :( ');
       return;
     }
-    this.dropped.emit(file);
+    this.chatService.uploadImage(file);
+    this.inputFileEl.nativeElement.value = null;
   }
 }
