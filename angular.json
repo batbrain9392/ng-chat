@@ -101,6 +101,10 @@
           "options": {
             "browserTarget": "ng-chat:build"
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
