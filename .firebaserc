@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ng-chat-80795": {
+      "hosting": {
+        "ng-chat": [
+          "ng-chat-80795"
+        ]
+      }
+    }
+  }
+}
