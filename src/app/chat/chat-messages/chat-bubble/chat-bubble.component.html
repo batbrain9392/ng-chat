@@ -1,8 +1,19 @@
-<div class="bubble-container" [class.reverse]="isMe">
-  <img [src]="chat.userImgUrl || 'assets/avatar.png'" />
+<div
+  class="bubble-container"
+  [class.reverse]="chat.username | isMe: 'boolean' | async"
+>
+  <img [src]="chat.userImgUrl || 'assets/avatar.png'" class="avatar" />
   <mat-card>
-    <p class="mat-small color-accent">{{ isMe ? 'Me' : chat.username }}</p>
-    <p class="text">{{ chat.text }}</p>
-    <div class="xtra-small" style="text-align: right;">{{ chat.timestamp | date:'shortTime' }}</div>
+    <p class="mat-small color-accent">{{ chat.username | isMe | async }}</p>
+    <img
+      [src]="chat.imgUrl"
+      class="chat-img"
+      loading="lazy"
+      *ngIf="chat.imgUrl"
+    />
+    <p *ngIf="chat.text">{{ chat.text }}</p>
+    <div class="chat-time">
+      {{ chat.timestamp | date: 'shortTime' }}
+    </div>
   </mat-card>
 </div>

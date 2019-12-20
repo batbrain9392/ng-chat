@@ -14,11 +14,10 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root'
 })
 export class ChatService {
-  private messagesBS = new BehaviorSubject<Chat[]>([]);
-  private messages$ = this.messagesBS.asObservable();
   private uploadTask: AngularFireUploadTask;
   // uploadPercentage$: Observable<number>;
   isUploadActive$: Observable<boolean>;
+  chatCollection = this.db.collection<Chat>('chat');
 
   constructor(
     private db: AngularFirestore,
@@ -27,34 +26,22 @@ export class ChatService {
   ) {}
 
   getMessages() {
-    const messages: Chat[] = [];
-    for (let i = 0; i < 50; i++) {
-      messages.push({
-        id: `${new Date().getTime()}`,
-        text: `message ${i}`,
-        username: `username${i}`,
-        timestamp: new Date().getTime()
-      });
-    }
-    this.messagesBS.next(messages);
-    return this.messages$;
+    return this.db
+      .collection<Chat>('chat', ref => ref.orderBy('timestamp'))
+      .valueChanges();
   }
 
   async formChat() {
     const { username, userImgUrl } = await this.authService.user;
-    const chat: Chat = {
+    return {
       username,
       userImgUrl,
       timestamp: new Date().getTime()
-    };
-    return chat;
+    } as Chat;
   }
 
   async sendMessage(text: string) {
-    const chat = await this.formChat();
-    chat.text = text;
-    this.messagesBS.next([...this.messagesBS.getValue(), chat]);
-    console.log({ chat });
+    this.chatCollection.add({ ...(await this.formChat()), text } as Chat);
   }
 
   uploadImage(img: File) {
@@ -78,9 +65,10 @@ export class ChatService {
             .getDownloadURL()
             .pipe(first())
             .toPromise();
-          const chat = await this.formChat();
-          chat.imgUrl = imgUrl;
-          console.log({ chat });
+          this.chatCollection.add({
+            ...(await this.formChat()),
+            imgUrl
+          } as Chat);
         })
       )
       .subscribe();
