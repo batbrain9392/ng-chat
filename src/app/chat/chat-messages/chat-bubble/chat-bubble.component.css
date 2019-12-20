@@ -8,7 +8,7 @@
   direction: rtl;
 }
 
-img {
+.avatar {
   width: 100%;
   border-radius: 50%;
   margin-block-start: 6px;
@@ -22,6 +22,11 @@ mat-card {
   direction: ltr;
 }
 
-.xtra-small {
-  font-size: 9px;
+.chat-img {
+  max-width: 100%;
+}
+
+.chat-time {
+  font-size: 10px;
+  text-align: right;
 }

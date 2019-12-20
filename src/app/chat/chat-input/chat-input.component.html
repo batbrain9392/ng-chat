@@ -1,9 +1,15 @@
+<app-upload class="margin-top"></app-upload>
 <form (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline">
     <mat-label>Type a message</mat-label>
-    <input matInput [(ngModel)]="chat.text" name="text" />
+    <input matInput [(ngModel)]="text" name="text" />
   </mat-form-field>
-  <button mat-icon-button type="submit" [color]="chat.text ? 'primary' : null">
+  <button
+    mat-icon-button
+    type="submit"
+    [color]="text ? 'primary' : null"
+    class="margin-top"
+  >
     <mat-icon>send</mat-icon>
   </button>
 </form>

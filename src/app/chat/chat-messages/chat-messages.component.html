@@ -1,6 +1,4 @@
-<app-chat-bubble
-  *ngFor="let chat of messages; trackBy: trackById"
-  [chat]="chat"
-  [isMe]="chat.username === myUsername"
-></app-chat-bubble>
-<p *ngIf="!messages.length" style="color: white;">No messages</p>
+<app-chat-bubble *ngFor="let chat of messages" [chat]="chat"></app-chat-bubble>
+<div *ngIf="!(messages && messages.length)" style="color: white;">
+  No messages
+</div>
