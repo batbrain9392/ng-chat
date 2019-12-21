@@ -5,6 +5,12 @@
   gap: 150px;
 }
 
+.title {
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
 .logo-button {
   display: grid;
   grid-template-columns: max-content auto;
