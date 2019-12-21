@@ -2,13 +2,10 @@
   "name": "ng-chat",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "deploy": "ng build --prod && firebase deploy"
+    "build": "ng build --prod",
+    "deploy": "firebase deploy",
+    "b&d": "npm run build && npm run deploy"
   },
   "private": true,
   "dependencies": {
