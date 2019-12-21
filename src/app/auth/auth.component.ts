@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 export class AuthComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-  async onLoginClick() {
+  async onSigninClick() {
     await this.authService.signin();
     this.router.navigateByUrl('/chat');
   }

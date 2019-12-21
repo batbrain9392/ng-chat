@@ -1,0 +1,13 @@
+:host {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  gap: 150px;
+}
+
+.logo-button {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 10px;
+  align-items: center;
+}
