@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "ng-chat-80795": {
-      "hosting": {
-        "ng-chat": [
-          "ng-chat-80795"
-        ]
-      }
-    }
+  "projects": {
+    "default": "ng-chat-80795"
   }
 }
