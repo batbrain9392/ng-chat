@@ -1,7 +1,7 @@
 <form (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>Type a message</mat-label>
-    <input matInput [(ngModel)]="text" name="text" />
+    <input matInput [(ngModel)]="text" name="text" autocomplete="off" />
   </mat-form-field>
   <button
     mat-icon-button
