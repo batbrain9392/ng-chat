@@ -8,8 +8,8 @@ export class IsMePipe implements PipeTransform {
   constructor(private authService: AuthService) {}
 
   async transform(chatUsername: string, type?: 'boolean') {
-    const { displayName: myUsername } = await this.authService.user;
-    const isMe = myUsername === chatUsername;
+    const user = await this.authService.user;
+    const isMe = user.displayName === chatUsername;
     return type ? isMe : isMe ? 'Me' : chatUsername;
   }
 }
