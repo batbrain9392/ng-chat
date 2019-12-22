@@ -22,3 +22,7 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.w-100 .mat-form-field-infix {
+  width: 100%;
+}
