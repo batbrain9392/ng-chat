@@ -28,4 +28,8 @@ export class ChatMessagesComponent implements OnChanges {
       100
     );
   }
+
+  chatId(_index: number, { id }: Chat) {
+    return id;
+  }
 }

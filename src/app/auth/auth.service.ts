@@ -7,13 +7,15 @@ import { take, filter, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  user$ = this.afAuth.user.pipe(take(1));
-  user = this.user$
-    .pipe(
-      filter(user => !!user),
-      map(({ displayName, photoURL }) => ({ displayName, photoURL }))
-    )
-    .toPromise();
+  user$ = this.afAuth.user.pipe(
+    take(1),
+    map(user => {
+      if (user) {
+        return { displayName: user.displayName, photoURL: user.photoURL };
+      }
+      return null;
+    })
+  );
 
   constructor(private afAuth: AngularFireAuth) {}
 

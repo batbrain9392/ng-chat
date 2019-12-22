@@ -6,7 +6,7 @@ import {
 } from '@angular/fire/storage';
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, map, first } from 'rxjs/operators';
+import { finalize, map, first, mergeMap } from 'rxjs/operators';
 import { Chat } from './chat';
 import { AuthService } from '../auth/auth.service';
 
@@ -28,19 +28,34 @@ export class ChatService {
   getMessages() {
     return this.db
       .collection<Chat>('chat', ref => ref.orderBy('timestamp'))
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            const data = a.payload.doc.data();
+            const { id } = a.payload.doc;
+            return { id, ...data } as Chat;
+          })
+        )
+      );
   }
 
-  async formChat() {
-    const user = await this.authService.user;
-    return {
-      timestamp: new Date().getTime(),
-      user
-    } as Chat;
+  formChat() {
+    return this.authService.user$.pipe(
+      map(
+        user =>
+          ({
+            timestamp: new Date().getTime(),
+            user
+          } as Chat)
+      )
+    );
   }
 
-  async sendMessage(text: string) {
-    this.chatCollection.add({ ...(await this.formChat()), text } as Chat);
+  sendMessage(text: string) {
+    this.formChat()
+      .pipe(map(chat => this.chatCollection.add({ ...chat, text } as Chat)))
+      .subscribe();
   }
 
   uploadImage(img: File) {
@@ -56,18 +71,19 @@ export class ChatService {
           uploadSnapshot.bytesTransferred < uploadSnapshot.totalBytes
       )
     );
-    const taskSubscription = uploadSnapshot$
+    uploadSnapshot$
       .pipe(
-        finalize(async () => {
-          taskSubscription.unsubscribe();
-          const imgUrl = await fileRef
-            .getDownloadURL()
-            .pipe(first())
-            .toPromise();
-          this.chatCollection.add({
-            ...(await this.formChat()),
-            imgUrl
-          } as Chat);
+        finalize(() => {
+          fileRef.getDownloadURL().pipe(
+            first(),
+            mergeMap((imgUrl: string) => {
+              return this.formChat().pipe(
+                map(chat =>
+                  this.chatCollection.add({ ...chat, imgUrl } as Chat)
+                )
+              );
+            })
+          );
         })
       )
       .subscribe();
