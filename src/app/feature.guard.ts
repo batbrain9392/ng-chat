@@ -42,7 +42,7 @@ export class FeatureGuard implements CanActivate, CanLoad {
       map(user => !!user),
       tap(isLoggedIn => {
         if (!isLoggedIn) {
-          this.router.navigateByUrl('/auth');
+          this.router.navigateByUrl('/');
         }
       })
     );

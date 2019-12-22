@@ -13,6 +13,6 @@ export class OptionsComponent {
 
   async signout() {
     await this.authService.signout();
-    this.router.navigateByUrl('/auth');
+    this.router.navigateByUrl('/');
   }
 }
