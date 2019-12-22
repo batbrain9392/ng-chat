@@ -9,10 +9,17 @@ import { AuthService } from './auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthComponent {
+  isSigningIn: boolean;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   async onSigninClick() {
-    await this.authService.signin();
-    this.router.navigateByUrl('/chat');
+    this.isSigningIn = true;
+    try {
+      await this.authService.signin();
+      this.router.navigateByUrl('/chat');
+    } catch (error) {
+      alert(error);
+    }
   }
 }
