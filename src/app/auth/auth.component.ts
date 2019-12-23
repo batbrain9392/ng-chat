@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -11,12 +12,17 @@ import { AuthService } from './auth.service';
 export class AuthComponent {
   isSigningIn: boolean;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private matSnackBar: MatSnackBar
+  ) {}
 
   async onSigninClick() {
     this.isSigningIn = true;
     try {
-      await this.authService.signin();
+      const userCredential = await this.authService.signin();
+      this.matSnackBar.open(`Logged in as ${userCredential.user.displayName}`);
       this.router.navigateByUrl('/chat');
     } catch (error) {
       alert(error);
