@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { AppUpdateService } from './app-update.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor(private appUpdateService: AppUpdateService) {}
+
+  ngOnInit() {
+    this.appUpdateService.init();
+  }
+}
