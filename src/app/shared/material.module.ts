@@ -6,6 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarConfig
+} from '@angular/material/snack-bar';
 
 @NgModule({
   exports: [
@@ -15,7 +20,17 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule
+  ],
+  providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 3500,
+        horizontalPosition: 'start'
+      } as MatSnackBarConfig
+    }
   ]
 })
 export class MaterialModule {}
