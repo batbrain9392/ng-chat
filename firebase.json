@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/ng-chat",
+    "public": "dist/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
