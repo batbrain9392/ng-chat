@@ -22,7 +22,14 @@ export class AuthComponent {
     this.isSigningIn = true;
     try {
       const userCredential = await this.authService.signin();
-      this.matSnackBar.open(`Logged in as ${userCredential.user.displayName}`);
+      this.matSnackBar.open(
+        `Logged in as ${userCredential.user.displayName}`,
+        null,
+        {
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        }
+      );
       this.router.navigateByUrl('/chat');
     } catch (error) {
       alert(error);
