@@ -1,3 +1,9 @@
 :host {
   width: 40px;
 }
+
+.spinner-container {
+  height: 40px;
+  display: grid;
+  place-content: center;
+}
