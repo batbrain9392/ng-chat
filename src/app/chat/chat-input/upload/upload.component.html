@@ -1,17 +1,10 @@
-<ng-container
+<div class="spinner-container"
   *ngIf="this.chatService.isUploadActive$ | async; else uploadInactive"
 >
-  <mat-spinner diameter="40"></mat-spinner>
-</ng-container>
+  <mat-spinner diameter="24"></mat-spinner>
+</div>
 <ng-template #uploadInactive>
-  <button
-    mat-icon-button
-    appDropZone
-    (hovered)="toggleHover($event)"
-    (dropped)="onDrop($event)"
-    (click)="inputFile.click()"
-    [color]="isHovering ? 'primary' : null"
-  >
+  <button mat-icon-button (click)="inputFile.click()">
     <mat-icon>attach_file</mat-icon>
   </button>
   <input

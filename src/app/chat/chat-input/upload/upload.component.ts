@@ -15,13 +15,8 @@ import { ChatService } from '../../chat.service';
 export class UploadComponent {
   @ViewChild('inputFile')
   inputFileEl: ElementRef<HTMLInputElement>;
-  isHovering: boolean;
 
   constructor(public chatService: ChatService) {}
-
-  toggleHover(event: boolean) {
-    this.isHovering = event;
-  }
 
   onDrop(files: FileList) {
     const file = files.item(0);
