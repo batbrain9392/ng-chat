@@ -11,13 +11,14 @@
     <p class="mat-small color-accent">
       {{ chat.user.displayName | isMe | async }}
     </p>
-    <img
-      [src]="chat.imgUrl"
-      height="150px"
-      class="chat-img"
-      loading="lazy"
-      *ngIf="chat.imgUrl"
-    />
+    <div class="img-container">
+      <img
+        [src]="chat.imgUrl"
+        height="150px"
+        loading="lazy"
+        *ngIf="chat.imgUrl"
+      />
+    </div>
     <p *ngIf="chat.text">{{ chat.text }}</p>
     <div class="chat-time">
       {{ chat.timestamp | date: 'shortTime' }}
