@@ -2,13 +2,18 @@
   class="bubble-container"
   [class.reverse]="chat.user.displayName | isMe: 'boolean' | async"
 >
-  <img [src]="chat.user.photoURL || 'assets/avatar.png'" class="avatar" />
+  <img
+    [src]="chat.user.photoURL || 'assets/avatar.png'"
+    class="avatar"
+    (load)="scrollToBottom()"
+  />
   <mat-card>
     <p class="mat-small color-accent">
       {{ chat.user.displayName | isMe | async }}
     </p>
     <img
       [src]="chat.imgUrl"
+      height="150px"
       class="chat-img"
       loading="lazy"
       *ngIf="chat.imgUrl"

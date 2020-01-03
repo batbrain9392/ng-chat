@@ -1,4 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  AfterViewInit
+} from '@angular/core';
 import { Chat } from '../../chat';
 
 @Component({
@@ -7,7 +12,19 @@ import { Chat } from '../../chat';
   styleUrls: ['./chat-bubble.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatBubbleComponent {
+export class ChatBubbleComponent implements AfterViewInit {
   @Input()
   chat: Chat;
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    window.scrollTo({
+      left: 0,
+      top: document.body.scrollHeight,
+      behavior: 'auto'
+    });
+  }
 }
