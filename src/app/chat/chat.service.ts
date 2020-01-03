@@ -76,7 +76,9 @@ export class ChatService {
               take(1),
               mergeMap((imgUrl: string) =>
                 this.httpClient
-                  .get(`http://35.202.154.9:8000/predict?image=${btoa(imgUrl)}`)
+                  .get(
+                    `https://ff713e1f.ngrok.io/predict?image=${btoa(imgUrl)}`
+                  )
                   .pipe(
                     take(1),
                     mergeMap(({ predictions }: any) => {
