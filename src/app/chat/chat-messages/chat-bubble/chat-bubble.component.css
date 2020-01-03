@@ -22,8 +22,12 @@ mat-card {
   direction: ltr;
 }
 
-.chat-img {
-  width: 100%;
+.img-container {
+  text-align: center;
+}
+
+.img-container img {
+  max-width: 100%;
   object-fit: contain;
 }
 
