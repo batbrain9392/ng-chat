@@ -18,7 +18,7 @@ export class AppUpdateService {
     const appIsStable$ = this.applicationRef.isStable.pipe(
       first(isStable => isStable)
     );
-    const everyInterval$ = interval(15 * 60 * 1000);
+    const everyInterval$ = interval(5 * 60 * 1000);
     const everyIntervalOnceAppIsStable$ = concat(appIsStable$, everyInterval$);
     everyIntervalOnceAppIsStable$.subscribe(() => this.checkForUpdate());
     this.watchUpdate();
