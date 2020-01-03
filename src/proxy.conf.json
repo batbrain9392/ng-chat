@@ -1,8 +1,0 @@
-{
-  "/predict": {
-    "target": "http://35.202.154.9:8000",
-    "secure": false,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  }
-}

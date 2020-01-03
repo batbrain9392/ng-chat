@@ -75,35 +75,37 @@ export class ChatService {
             .pipe(
               take(1),
               mergeMap((imgUrl: string) =>
-                this.httpClient.get(`/predict?image=${btoa(imgUrl)}`).pipe(
-                  take(1),
-                  mergeMap(({ predictions }: any) => {
-                    console.table(predictions);
-                    const text =
-                      predictions &&
-                      predictions.length &&
-                      predictions[0].caption;
-                    return this.formChat().pipe(
-                      map(chat =>
-                        this.chatCollection.add({
-                          ...chat,
-                          imgUrl,
-                          text
-                        } as Chat)
-                      )
-                    );
-                  }),
-                  catchError(err => {
-                    console.error(err);
-                    this.storage.storage.refFromURL(imgUrl).delete();
-                    this.matSnackBar.open(
-                      'Server not reachable. Please try again after some time.',
-                      'CLOSE'
-                    );
-                    return of(null);
-                  }),
-                  finalize(() => this.isUploadActive.next(false))
-                )
+                this.httpClient
+                  .get(`http://35.202.154.9:8000/predict?image=${btoa(imgUrl)}`)
+                  .pipe(
+                    take(1),
+                    mergeMap(({ predictions }: any) => {
+                      console.table(predictions);
+                      const text =
+                        predictions &&
+                        predictions.length &&
+                        predictions[0].caption;
+                      return this.formChat().pipe(
+                        map(chat =>
+                          this.chatCollection.add({
+                            ...chat,
+                            imgUrl,
+                            text
+                          } as Chat)
+                        )
+                      );
+                    }),
+                    catchError(err => {
+                      console.error(err);
+                      this.storage.storage.refFromURL(imgUrl).delete();
+                      this.matSnackBar.open(
+                        'Server not reachable. Please try again after some time.',
+                        'CLOSE'
+                      );
+                      return of(null);
+                    }),
+                    finalize(() => this.isUploadActive.next(false))
+                  )
               )
             )
             .subscribe();
