@@ -7,8 +7,8 @@ import {
 } from '@angular/fire/storage';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, of } from 'rxjs';
-import { finalize, map, mergeMap, take, catchError } from 'rxjs/operators';
+import { BehaviorSubject, of, forkJoin } from 'rxjs';
+import { finalize, map, mergeMap, take, catchError, tap } from 'rxjs/operators';
 import { Chat } from './chat';
 import { AuthService } from '../auth/auth.service';
 
@@ -16,10 +16,11 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root'
 })
 export class ChatService {
+  private chatCollection = this.db.collection<Chat>('chat');
   private uploadTask: AngularFireUploadTask;
   private isUploadActive = new BehaviorSubject<boolean>(false);
+  private fileRef: AngularFireStorageReference;
   readonly isUploadActive$ = this.isUploadActive.asObservable();
-  chatCollection = this.db.collection<Chat>('chat');
 
   constructor(
     private db: AngularFirestore,
@@ -64,53 +65,67 @@ export class ChatService {
 
   uploadImage(img: File) {
     this.isUploadActive.next(true);
-    const filePath = `chat/${new Date().getTime()}_${img.name}`;
-    const fileRef = this.storage.ref(filePath);
-    this.uploadTask = this.storage.upload(filePath, img);
-    const uploadSnapshot$ = this.uploadTask.snapshotChanges();
-    uploadSnapshot$
-      .pipe(finalize(() => this.getImageUrlAndAddToChat(fileRef)))
+    const predict$ = this.getPredictionStream(img);
+    const firebaseUpload$ = this.getFirebaseUploadStream(img);
+    predict$
+      .pipe(
+        take(1),
+        mergeMap(predictedCaption =>
+          firebaseUpload$.pipe(
+            finalize(() =>
+              this.getImageUrlAndAddToChat(this.fileRef, predictedCaption)
+            )
+          )
+        ),
+        catchError(err => this.errHandler(err))
+      )
       .subscribe();
   }
 
-  private getImageUrlAndAddToChat(fileRef: AngularFireStorageReference) {
+  private getPredictionStream(img: File) {
+    const formData = new FormData();
+    formData.append('image', img);
+    return this.httpClient.post('/model/predict', formData).pipe(
+      map(({ predictions }: any) => {
+        console.table(predictions);
+        return predictions[0].caption as string;
+      })
+    );
+  }
+
+  private getFirebaseUploadStream(img: File) {
+    const filePath = `test/${new Date().getTime()}_${img.name}`;
+    this.fileRef = this.storage.ref(filePath);
+    this.uploadTask = this.storage.upload(filePath, img);
+    return this.uploadTask.snapshotChanges();
+  }
+
+  private getImageUrlAndAddToChat(
+    fileRef: AngularFireStorageReference,
+    text: string
+  ) {
     fileRef
       .getDownloadURL()
       .pipe(
         take(1),
-        mergeMap((imgUrl: string) => this.predictCaptionAndAddToChat(imgUrl))
+        mergeMap((imgUrl: string) => this.addToChat(text, imgUrl))
       )
       .subscribe();
   }
 
-  private predictCaptionAndAddToChat(imgUrl: string) {
-    return this.httpClient
-      .get(`https://ff713e1f.ngrok.io/predict?image=${btoa(imgUrl)}`)
-      .pipe(
-        take(1),
-        mergeMap(({ predictions }: any) => this.addToChat(predictions, imgUrl)),
-        catchError(err => this.errHandler(err, imgUrl)),
-        finalize(() => this.isUploadActive.next(false))
-      );
-  }
-
-  private addToChat(predictions: any[], imgUrl: string) {
-    console.table(predictions);
-    const text = predictions[0].caption;
+  private addToChat(text: string, imgUrl: string) {
     return this.formChat().pipe(
       map(chat =>
-        this.chatCollection.add({
-          ...chat,
-          imgUrl,
-          text
-        } as Chat)
+        this.chatCollection
+          .add({ ...chat, imgUrl, text } as Chat)
+          .then(() => this.isUploadActive.next(false))
       )
     );
   }
 
-  private errHandler(err: any, imgUrl: string) {
+  private errHandler(err: any) {
+    this.isUploadActive.next(false);
     console.error(err);
-    this.storage.storage.refFromURL(imgUrl).delete();
     this.matSnackBar.open(
       'Server not reachable. Please try again after some time.',
       'CLOSE'
