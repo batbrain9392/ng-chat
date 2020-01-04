@@ -1,0 +1,8 @@
+{
+  "/model/*": {
+    "target": "http://xcaption-cap.apps.us-west-2.starter.openshift-online.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
