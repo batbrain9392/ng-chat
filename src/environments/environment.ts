@@ -12,14 +12,6 @@ export const environment = {
     storageBucket: 'ng-chat-80795.appspot.com',
     messagingSenderId: '330169365334',
     appId: '1:330169365334:web:239801e904b53993fb5cf7'
-  }
+  },
+  predictionURI: ''
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
