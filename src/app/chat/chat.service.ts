@@ -84,10 +84,7 @@ export class ChatService {
   }
 
   private getPredictionStream(img: File) {
-    const prepend = environment.production
-      ? 'http://xcaption-cap.apps.us-west-2.starter.openshift-online.com'
-      : '';
-    const predictionAPI = `${prepend}/model/predict`;
+    const predictionAPI = `${environment.predictionURI}/model/predict`;
     const formData = new FormData();
     formData.append('image', img);
     return this.httpClient.post(predictionAPI, formData).pipe(
@@ -99,7 +96,7 @@ export class ChatService {
   }
 
   private getFirebaseUploadStream(img: File) {
-    const filePath = `test/${new Date().getTime()}_${img.name}`;
+    const filePath = `chat/${new Date().getTime()}_${img.name}`;
     this.fileRef = this.storage.ref(filePath);
     this.uploadTask = this.storage.upload(filePath, img);
     return this.uploadTask.snapshotChanges();
