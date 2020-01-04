@@ -129,7 +129,7 @@ export class ChatService {
     this.isUploadActive.next(false);
     console.error(err);
     this.matSnackBar.open(
-      'ML server crashed. Kindly try with a small PNG image.',
+      'AI server crashed. Please try after some time with a small PNG image.',
       'CLOSE'
     );
     return of(null);
