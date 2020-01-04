@@ -129,7 +129,7 @@ export class ChatService {
     this.isUploadActive.next(false);
     console.error(err);
     this.matSnackBar.open(
-      'Server not reachable. Please try again after some time.',
+      'ML server crashed. Kindly try with a small PNG image.',
       'CLOSE'
     );
     return of(null);
