@@ -7,8 +7,9 @@ import {
 } from '@angular/fire/storage';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, of, forkJoin } from 'rxjs';
-import { finalize, map, mergeMap, take, catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { finalize, map, mergeMap, take, catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import { Chat } from './chat';
 import { AuthService } from '../auth/auth.service';
 
@@ -83,9 +84,13 @@ export class ChatService {
   }
 
   private getPredictionStream(img: File) {
+    const prepend = environment.production
+      ? 'http://xcaption-cap.apps.us-west-2.starter.openshift-online.com'
+      : '';
+    const predictionAPI = `${prepend}/model/predict`;
     const formData = new FormData();
     formData.append('image', img);
-    return this.httpClient.post('/model/predict', formData).pipe(
+    return this.httpClient.post(predictionAPI, formData).pipe(
       map(({ predictions }: any) => {
         console.table(predictions);
         return predictions[0].caption as string;
